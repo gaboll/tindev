@@ -15,13 +15,13 @@ module.exports = {
     };
 
     if (!likes && targetDev.id !== loggedDev.id) {
-      await connection('likes').insert({
-        userLike: targetDev.id,
-        devId: loggedDev.id,
-      });
-
       loggedDev.likes.push(targetDev.id);
+      
       await connection('devs').where('id', loggedDev.id).update({ likes: loggedDev.likes });
+
+      if (targetDev.likes.includes(loggedDev.id)) {
+        console.log('Deu MATCH!')
+      }
 
       return response.json({ like: targetDev.id });
     };

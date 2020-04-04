@@ -15,12 +15,8 @@ module.exports = {
     };
 
     if (!dislikes && targetDev.id !== loggedDev.id) {
-      await connection('dislikes').insert({
-        userDislike: targetDev.id,
-        devId: loggedDev.id,
-      });
-
       loggedDev.dislikes.push(targetDev.id);
+      
       await connection('devs').where('id', loggedDev.id).update({ dislikes: loggedDev.dislikes });
 
       return response.json({ dislike: targetDev.id });

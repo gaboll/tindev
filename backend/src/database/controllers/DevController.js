@@ -4,9 +4,23 @@ const connection = require('../../database/connection');
 
 module.exports = {
   async index(request, response) {
-    const res = await connection('devs').select('*');
+    const { user } = request.headers;
 
-    return response.json(res);
+    console.log(user)
+
+    const [loggedDev] = await connection('devs').select('*').where('id', user ? user : "");
+
+    console.log(loggedDev.likes)
+
+    const users = await connection('devs')
+      .select('*')
+      .whereNotIn('id', loggedDev.likes ? loggedDev.likes : [])
+      .whereNotIn('id', loggedDev.dislikes ? loggedDev.dislikes : [])
+      .andWhereNot('id', user)
+
+    // const res = await connection('devs').select('*');
+
+    return response.json(users);
   },
 
   async store(request, response) {
