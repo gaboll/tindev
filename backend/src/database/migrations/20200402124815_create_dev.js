@@ -6,9 +6,9 @@ exports.up = function (knex) {
     table.string('user').notNullable();
     table.string('bio');
     table.string('avatar').notNullable();
-    table.specificType('likes', 'STRING[]');
-    table.specificType('dislikeslikes', 'STRING[]');
-    table.timestamps();
+    table.specificType('likes', 'TEXT[]').notNullable().defaultTo('{}');
+    table.specificType('dislikes', 'TEXT[]').notNullable().defaultTo('{}');
+    table.timestamps(true, true);
   });
 };
 

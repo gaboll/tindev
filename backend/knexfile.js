@@ -1,16 +1,21 @@
 // Update with your config settings.
-
 module.exports = {
-
   development: {
-    client: 'sqlite3',
+    client: 'pg',
     connection: {
-      filename: './src/database/db.sqlite'
+      host: 'localhost',
+      port: 5432,
+      user: 'postgres',
+      password: '1234',
+      database: 'tindevdb'
     },
     migrations: {
-      directory: './src/database/migrations'
+      directory: __dirname + '/src/database/migrations'
     },
-    useNullAsDefault: true,
+    seeds: {
+      directory: __dirname + '/src/database/seeds/dev'
+    },
+    useNullAsDefault: true
   },
 
   test: {
@@ -28,7 +33,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {
@@ -44,7 +49,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {

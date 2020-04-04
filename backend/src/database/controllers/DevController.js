@@ -4,16 +4,7 @@ const connection = require('../../database/connection');
 
 module.exports = {
   async index(request, response) {
-    const teste = await connection('likes').select('userLike').where('devId', 'ea8d141c')
-
-    // console.log(teste)
-
-    const res = await connection('devs')
-      // .innerJoin('likes', 'likes.devId', '=', 'devs.id')
-      .select([
-        'devs.*',
-        // 'likes.userLike AS likes'
-      ]);
+    const res = await connection('devs').select('*');
 
     return response.json(res);
   },
@@ -28,9 +19,9 @@ module.exports = {
       return response.json(userExists);
     }
 
-    const gitHubResponse = await axios.get(`https://api.github.com/users/${username}`);
+    const result = await axios.get(`https://api.github.com/users/${username}`);
 
-    const { name, bio, avatar_url: avatar } = gitHubResponse.data;
+    const { name, bio, avatar_url: avatar } = result.data;
 
     await connection('devs')
       .insert({
@@ -39,8 +30,6 @@ module.exports = {
         user: username,
         bio,
         avatar,
-        created_at: Date.now(),
-        updated_at: Date.now(),
       });
 
     return response.json({
@@ -49,8 +38,6 @@ module.exports = {
       user: username,
       bio,
       avatar,
-      created_at: Date.now(),
-      updated_at: Date.now(),
     });
   }
 };
