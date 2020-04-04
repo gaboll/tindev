@@ -7,12 +7,8 @@ module.exports = {
 
     const [loggedDev] = await connection('devs').select('*').where('id', user);
     const [targetDev] = await connection('devs').select('*').where('id', devId);
-    const [dislikes] = await connection('dislikes')
-      .select('*')
-      .where({
-        userDislike: targetDev.id,
-        devId: loggedDev.id
-      });
+
+    const dislikes = loggedDev.dislikes.find(dev => dev === targetDev.id)
 
     if (!targetDev || !loggedDev) {
       return response.status(400).json({ error: 'User not exists' });
