@@ -6,19 +6,17 @@ module.exports = {
   async index(request, response) {
     const { user } = request.headers;
 
-    console.log(user)
-
     const [loggedDev] = await connection('devs').select('*').where('id', user ? user : "");
 
-    console.log(loggedDev.likes)
+    if (!loggedDev) {
+      return response.status(400).json({ error: 'User not found' });
+    };
 
     const users = await connection('devs')
       .select('*')
       .whereNotIn('id', loggedDev.likes ? loggedDev.likes : [])
       .whereNotIn('id', loggedDev.dislikes ? loggedDev.dislikes : [])
       .andWhereNot('id', user)
-
-    // const res = await connection('devs').select('*');
 
     return response.json(users);
   },
@@ -44,6 +42,7 @@ module.exports = {
         user: username,
         bio,
         avatar,
+        // like: []
       });
 
     return response.json({
