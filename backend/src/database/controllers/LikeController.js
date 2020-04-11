@@ -16,11 +16,20 @@ module.exports = {
 
     if (!likes && targetDev.id !== loggedDev.id) {
       loggedDev.likes.push(targetDev.id);
-      
+
       await connection('devs').where('id', loggedDev.id).update({ likes: loggedDev.likes });
 
       if (targetDev.likes.includes(loggedDev.id)) {
-        console.log('Deu MATCH!')
+        const loggedSocket = request.connectedUsers[user];
+        const targetSocket = request.connectedUsers[devId];
+
+        if (loggedSocket) {
+          request.io.to(loggedSocket).emit('match', targetDev);
+        }
+
+        if (targetSocket) {
+          request.io.to(targetSocket).emit('match', loggedDev);
+        }
       }
 
       return response.json({ like: targetDev.id });
