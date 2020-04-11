@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Login from './src/pages/Login';
+import AppContainer from './src/routes';
 
 export default function App() {
   return (
-    <Login />
+    <AppContainer />
   );
 }
 
