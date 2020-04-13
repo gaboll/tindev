@@ -85,4 +85,49 @@ export default StyleSheet.create({
       height: 2,
     },
   },
+
+  matchContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  matchImage: {
+    height: 60,
+    resizeMode: 'contain'
+  },
+
+  matchDevAvatar: {
+    height: 160,
+    width: 160,
+    borderRadius: 80,
+    borderColor: '#fff',
+    borderWidth: 5,
+    marginVertical: 30,
+  },
+
+  matchDevName: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+
+  matchDevBio: {
+    marginTop: 10,
+    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.8)',
+    lineHeight: 24,
+    textAlign: 'center',
+    paddingHorizontal: 30,
+  },
+
+  buttonText: {
+    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.8)',
+    textAlign: 'center',
+    marginTop: 30,
+    fontWeight: 'bold'
+  },
 });
